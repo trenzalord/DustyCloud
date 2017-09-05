@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
+import {Story} from "../../interfaces/Story";
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * Generated class for the StoryPage page.
@@ -8,18 +11,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  segment: 'story/:storyKey',
+  defaultHistory: ['RadarPage']
+})
 @Component({
   selector: 'page-story',
   templateUrl: 'story.html',
 })
 export class StoryPage {
+  story: Story;
+  sub: Subscription;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private db: AngularFireDatabase) {
+    this.sub = this.db.object('/stories/' + this.navParams.get('storyKey')).subscribe( (story: Story) => {
+      this.story = story;
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StoryPage');
+  goToRadar() {
+    this.sub.unsubscribe();
+    this.navCtrl.popTo("RadarPage");
   }
 
 }

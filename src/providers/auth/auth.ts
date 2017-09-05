@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 /*
   Generated class for the AuthProvider provider.
@@ -10,9 +10,14 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class AuthProvider {
+  public _authNotifier: ReplaySubject<Boolean>;
 
-  constructor(public http: Http) {
-    console.log('Hello AuthProvider Provider');
+  constructor() {
+    this._authNotifier = new ReplaySubject(1);
+  }
+
+  get authNotifier() {
+    return this._authNotifier;
   }
 
 }

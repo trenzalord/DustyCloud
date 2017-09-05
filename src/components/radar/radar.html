@@ -1,4 +1,4 @@
 <!-- Generated template for the RadarComponent component -->
-<div class="radar">
-  <div *ngFor="let point of points" [ngStyle]="{'left': calculate(0, point)}"></div>
-</div>
+<agm-map [latitude]="center[0]" [longitude]="center[1]" [disableDefaultUI]="true" [streetViewControl]="false" [zoomControl]="false" [zoom]="17" [styles]="styles">
+  <agm-marker *ngFor="let storyKey of pointsKeys" [latitude]="points[storyKey].location[0]" [longitude]="points[storyKey].location[1]" (markerClick)="goToViewStory(storyKey)"></agm-marker>
+</agm-map>

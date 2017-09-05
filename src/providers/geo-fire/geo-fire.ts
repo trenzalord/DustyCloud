@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import GeoFire from 'geofire';
+import {AngularFireDatabase} from "angularfire2/database";
 
 /*
   Generated class for the GeoFireProvider provider.
@@ -10,9 +11,13 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class GeoFireProvider {
+  _geoFire: GeoFire;
 
-  constructor(public http: Http) {
-    console.log('Hello GeoFireProvider Provider');
+  constructor(db: AngularFireDatabase) {
+    this._geoFire = new GeoFire(db.database.ref("/locations"));
   }
 
+  get geoFire(): GeoFire {
+    return this._geoFire;
+  }
 }

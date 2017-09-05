@@ -4,7 +4,7 @@ import {Story} from "../../interfaces/Story";
 import {AngularFireAuth} from "angularfire2/auth";
 import * as firebase from 'firebase/app';
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
-import {Geoposition} from "@ionic-native/geolocation";
+import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
 
 /**
  * Generated class for the StoryPage page.
@@ -14,13 +14,14 @@ import {Geoposition} from "@ionic-native/geolocation";
  */
 
 @IonicPage({
-  segment: "story/new/:latitude/:longitude"
+  segment: "edit-story/:latitude/:longitude",
+  defaultHistory: ['RadarPage']
 })
 @Component({
   selector: 'page-new-story',
-  templateUrl: 'new-story.html',
+  templateUrl: 'edit-story.html',
 })
-export class NewStoryPage {
+export class EditStoryPage {
   story: Story;
   stories: FirebaseListObservable<Story[]>;
 
@@ -28,12 +29,11 @@ export class NewStoryPage {
               public navParams: NavParams,
               private auth: AngularFireAuth,
               private db: AngularFireDatabase,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private geoFireProvider: GeoFireProvider) {
     this.story = {
       title: null,
       description: null,
-      latitude: this.navParams.get("latitude"),
-      longitude: this.navParams.get("longitude"),
       eventDate: null,
       createdDate: null
     };
@@ -51,16 +51,21 @@ export class NewStoryPage {
     if (this.story.title && this.story.description) {
       this.story.createdDate = new Date().toISOString();
       this.stories.push(this.story).then(ref => {
-        this.db.object('/users/' + this.story.uid + '/stories/' + ref.key).set(true).then(() => {
-          this.toastCtrl.create({
-            message: 'Story ' + this.story.title + ', was successfully created',
-            duration: 3000,
-            position: 'top'
-          }).present();
-          this.navCtrl.popTo("RadarPage");
+        this.geoFireProvider.geoFire.set(ref.key, [this.navParams.get("latitude"), this.navParams.get("longitude")]).then(() => {
+          this.db.object('/users/' + this.story.uid + '/stories/' + ref.key).set(true).then(() => {
+            this.toastCtrl.create({
+              message: 'Story ' + this.story.title + ', was successfully created',
+              duration: 3000,
+              position: 'top'
+            }).present();
+            this.goToRadar();
+          });
         });
       })
     }
   }
 
+  goToRadar() {
+    this.navCtrl.popTo("RadarPage");
+  }
 }
