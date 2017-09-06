@@ -1,4 +1,23 @@
 <!-- Generated template for the RadarComponent component -->
-<agm-map [latitude]="center[0]" [longitude]="center[1]" [disableDefaultUI]="true" [streetViewControl]="false" [zoomControl]="false" [zoom]="17" [styles]="styles">
-  <agm-marker *ngFor="let storyKey of pointsKeys" [latitude]="points[storyKey].location[0]" [longitude]="points[storyKey].location[1]" (markerClick)="goToViewStory(storyKey)"></agm-marker>
+<agm-map [latitude]="center[0]"
+         [longitude]="center[1]"
+         [disableDefaultUI]="true"
+         [streetViewControl]="false"
+         [zoomControl]="false"
+         [zoom]="16"
+         [styles]="styles">
+  <agm-marker *ngFor="let storyKey of pointsKeys"
+              [latitude]="points[storyKey].location[0]"
+              [longitude]="points[storyKey].location[1]"
+              (markerClick)="goToViewStory(storyKey)"></agm-marker>
+  <agm-circle [fillColor]="'white'"
+              [fillOpacity]="0.2"
+              [latitude]="center[0]"
+              [longitude]="center[1]"
+              [radius]="250"></agm-circle>
+  <agm-circle [fillColor]="'yellow'"
+              [fillOpacity]="1"
+              [latitude]="center[0]"
+              [longitude]="center[1]"
+              [radius]="5"></agm-circle>
 </agm-map>

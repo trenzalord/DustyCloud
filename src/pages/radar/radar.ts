@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth";
-import {AuthProvider} from "../../providers/auth/auth";
 import {Geolocation, Geoposition} from '@ionic-native/geolocation';
 import {Subscription} from "rxjs/Subscription";
 import 'rxjs/add/operator/filter';
@@ -32,7 +31,6 @@ export class RadarPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private auth: AngularFireAuth,
-              private authProvider: AuthProvider,
               private geolocation: Geolocation,
               private db: AngularFireDatabase,
               private geoFireProvider: GeoFireProvider) {
@@ -41,7 +39,7 @@ export class RadarPage {
     this.center = [0, 0];
   }
 
-  ionViewWillEnter() {
+  ngOnInit() {
     this.watch = this.geolocation.watchPosition()
       .filter((p) => p.coords !== undefined) //Filter Out Errors
       .subscribe(position => {
@@ -73,9 +71,7 @@ export class RadarPage {
   }
 
   signOut() {
-    this.auth.auth.signOut().then(() => {
-      this.authProvider.authNotifier.next(false);
-    });
+    this.auth.auth.signOut();
   }
 
   gotToAddStory() {
@@ -87,6 +83,10 @@ export class RadarPage {
 
   get storiesKeys() {
     return Object.keys(this.storiesInRadar);
+  }
+
+  goToBugReport() {
+    this.navCtrl.push("ReportBugPage");
   }
 
 }

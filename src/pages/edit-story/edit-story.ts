@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Story} from "../../interfaces/Story";
 import {AngularFireAuth} from "angularfire2/auth";
-import * as firebase from 'firebase/app';
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
 import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
 
@@ -42,9 +41,7 @@ export class EditStoryPage {
 
   ngOnInit() {
     this.story.eventDate = new Date().toISOString();
-    this.auth.authState.subscribe( (user:firebase.User) => {
-      this.story.uid = user.uid;
-    })
+    this.story.uid = this.auth.auth.currentUser.uid;
   }
 
   addStory() {

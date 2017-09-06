@@ -9,11 +9,12 @@ import {devEnv} from "./environments";
 import {AngularFireModule} from "angularfire2";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {AngularFireAuthModule} from "angularfire2/auth";
-import { AuthProvider } from '../providers/auth/auth';
 
 import {Geolocation} from '@ionic-native/geolocation';
 import { GeoFireProvider } from '../providers/geo-fire/geo-fire';
 import { AgmCoreModule } from '@agm/core';
+import { AppVersionProvider } from '../providers/app-version/app-version';
+import {HttpModule} from "@angular/http";
 
 let firebaseConfig = devEnv.firebase;
 
@@ -23,6 +24,7 @@ let firebaseConfig = devEnv.firebase;
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AgmCoreModule.forRoot({
@@ -39,9 +41,9 @@ let firebaseConfig = devEnv.firebase;
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
     Geolocation,
-    GeoFireProvider
+    GeoFireProvider,
+    AppVersionProvider
   ]
 })
 export class AppModule {}
