@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {App, IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth";
 import {Geolocation, Geoposition} from '@ionic-native/geolocation';
 import {Subscription} from "rxjs/Subscription";
@@ -28,12 +28,11 @@ export class RadarPage {
   storiesInRadar: {[key: string]: {key: string, location: number[]}}[];
   center: number[];
 
-  constructor(public navCtrl: NavController,
+  constructor(public modalCtrl: ModalController,
               public navParams: NavParams,
-              private auth: AngularFireAuth,
               private geolocation: Geolocation,
               private db: AngularFireDatabase,
-              private geoFireProvider: GeoFireProvider) {
+              private geoFireProvider: GeoFireProvider,) {
     this.stories = this.db.list("/stories");
     this.storiesInRadar = [];
     this.center = [0, 0];
@@ -70,23 +69,10 @@ export class RadarPage {
     this.watch.unsubscribe();
   }
 
-  signOut() {
-    this.auth.auth.signOut();
-  }
-
   gotToAddStory() {
-    this.navCtrl.push("EditStoryPage", {
+    this.modalCtrl.create("EditStoryPage", {
       latitude: this.geoPosition.coords.latitude,
       longitude: this.geoPosition.coords.longitude
-    });
+    }).present();
   }
-
-  get storiesKeys() {
-    return Object.keys(this.storiesInRadar);
-  }
-
-  goToBugReport() {
-    this.navCtrl.push("ReportBugPage");
-  }
-
 }

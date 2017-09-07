@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
-import {NavController} from "ionic-angular";
+import {App, ModalController, NavController} from "ionic-angular";
 
 /**
  * Generated class for the RadarComponent component.
@@ -20,7 +20,7 @@ export class RadarComponent implements AfterViewInit{
 
   styles: any;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public modalCtrl: ModalController) {
     this.styles = [
       {
         "elementType": "geometry",
@@ -251,8 +251,8 @@ export class RadarComponent implements AfterViewInit{
   }
 
   goToViewStory(storyKey: string) {
-    this.navCtrl.push("StoryPage", {
+    this.modalCtrl.create("StoryPage", {
       storyKey: storyKey
-    });
+    }).present();
   }
 }

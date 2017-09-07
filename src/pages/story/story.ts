@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {AngularFireDatabase} from "angularfire2/database";
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
 import {Story} from "../../interfaces/Story";
 import {Subscription} from "rxjs/Subscription";
+import {User} from "../../interfaces/User";
 
 /**
  * Generated class for the StoryPage page.
@@ -11,29 +12,28 @@ import {Subscription} from "rxjs/Subscription";
  * on Ionic pages and navigation.
  */
 
-@IonicPage({
-  segment: 'story/:storyKey',
-  defaultHistory: ['RadarPage']
-})
+@IonicPage()
 @Component({
   selector: 'page-story',
   templateUrl: 'story.html',
 })
 export class StoryPage {
-  story: Story;
+  story: FirebaseObjectObservable<Story>;
+  user: FirebaseObjectObservable<User>;
   sub: Subscription;
 
-  constructor(public navCtrl: NavController,
+  constructor(public viewCtrl: ViewController,
               public navParams: NavParams,
               private db: AngularFireDatabase) {
-    this.sub = this.db.object('/stories/' + this.navParams.get('storyKey')).subscribe( (story: Story) => {
-      this.story = story;
+    this.story = this.db.object('stories/' + this.navParams.get('storyKey'));
+    this.sub = this.story.subscribe((story: Story) => {
+      this.user = this.db.object('users/' + story.uid);
     });
   }
 
-  goToRadar() {
+  dismiss() {
     this.sub.unsubscribe();
-    this.navCtrl.popTo("RadarPage");
+    this.viewCtrl.dismiss();
   }
 
 }

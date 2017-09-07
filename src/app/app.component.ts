@@ -15,7 +15,7 @@ export class MyApp {
               auth: AngularFireAuth) {
     auth.authState.subscribe((authed) => {
       if (!!authed) {
-        this.rootPage = "RadarPage";
+        this.rootPage = "TabsPage";
       } else {
         this.rootPage = "LoginPage";
       }

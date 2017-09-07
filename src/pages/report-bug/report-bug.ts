@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
 import {BugReport} from "../../interfaces/BugReport";
 import {AngularFireAuth} from "angularfire2/auth";
@@ -11,10 +11,7 @@ import {AngularFireAuth} from "angularfire2/auth";
  * on Ionic pages and navigation.
  */
 
-@IonicPage({
-  segment: 'bug-report',
-  defaultHistory: ['RadarPage']
-})
+@IonicPage()
 @Component({
   selector: 'page-report-bug',
   templateUrl: 'report-bug.html',
@@ -23,7 +20,7 @@ export class ReportBugPage {
   bugReport: BugReport;
   bugReports: FirebaseListObservable<BugReport[]>;
 
-  constructor(public navCtrl: NavController,
+  constructor(public viewCtrl: ViewController,
               public navParams: NavParams,
               private db: AngularFireDatabase,
               private auth: AngularFireAuth,
@@ -45,12 +42,12 @@ export class ReportBugPage {
           duration: 3000,
           position: 'top'
         }).present();
-        this.goToRadar();
+        this.dismiss();
       });
     }
   }
 
-  goToRadar() {
-    this.navCtrl.popTo("RadarPage");
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

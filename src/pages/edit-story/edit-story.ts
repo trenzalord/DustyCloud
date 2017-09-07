@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {Story} from "../../interfaces/Story";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
@@ -12,10 +12,7 @@ import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
  * on Ionic pages and navigation.
  */
 
-@IonicPage({
-  segment: "edit-story/:latitude/:longitude",
-  defaultHistory: ['RadarPage']
-})
+@IonicPage()
 @Component({
   selector: 'page-new-story',
   templateUrl: 'edit-story.html',
@@ -24,7 +21,7 @@ export class EditStoryPage {
   story: Story;
   stories: FirebaseListObservable<Story[]>;
 
-  constructor(public navCtrl: NavController,
+  constructor(private viewCtrl: ViewController,
               public navParams: NavParams,
               private auth: AngularFireAuth,
               private db: AngularFireDatabase,
@@ -55,14 +52,14 @@ export class EditStoryPage {
               duration: 3000,
               position: 'top'
             }).present();
-            this.goToRadar();
+            this.dismiss();
           });
         });
       })
     }
   }
 
-  goToRadar() {
-    this.navCtrl.popTo("RadarPage");
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

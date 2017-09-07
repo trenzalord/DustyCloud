@@ -1,3 +1,16 @@
 page-radar {
+  #add-story-button {
+    position: absolute;
+    bottom: 30px;
+    z-index: 4;
+    width: 100%;
+    text-align: center;
 
+    button {
+      width: 50%;
+      -webkit-box-shadow: 0px 0px 10px 1px rgba(255,255,255,1);
+      -moz-box-shadow: 0px 0px 10px 1px rgba(255,255,255,1);
+      box-shadow: 0px 0px 10px 1px rgba(255,255,255,1);
+    }
+  }
 }

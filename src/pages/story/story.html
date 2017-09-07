@@ -9,17 +9,21 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label fixed>Title</ion-label>
-      <h2 item-right>{{ story?.title}}</h2>
+      <ion-label>Title</ion-label>
+      <h2 item-right>{{ (story | async)?.title}}</h2>
     </ion-item>
     <ion-item>
-      <ion-label fixed>Description</ion-label>
-      <p item-right>{{ story?.description }}</p>
+      <ion-label>Description</ion-label>
+      <p item-right>{{ (story | async)?.description }}</p>
     </ion-item>
     <ion-item>
-      <ion-label fixed>Event Date</ion-label>
-      <p item-right>{{ story?.eventDate | date }}</p>
+      <ion-label>Event Date</ion-label>
+      <p item-right>{{ (story | async)?.eventDate | date }}</p>
+    </ion-item>
+    <ion-item>
+      <ion-label>Author</ion-label>
+      <p item-right>{{ (user | async)?.publicName }}</p>
     </ion-item>
   </ion-list>
-  <button ion-button block (click)="goToRadar()">Back</button>
+  <button ion-button block (click)="dismiss()">Back</button>
 </ion-content>
