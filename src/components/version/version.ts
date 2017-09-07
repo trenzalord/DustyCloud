@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppVersionProvider} from "../../providers/app-version/app-version";
 
 /**
@@ -11,7 +11,7 @@ import {AppVersionProvider} from "../../providers/app-version/app-version";
   selector: 'dc-version',
   templateUrl: 'version.html'
 })
-export class VersionComponent {
+export class VersionComponent implements OnInit{
 
   version: string;
 

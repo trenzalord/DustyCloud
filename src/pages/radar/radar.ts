@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {App, IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
-import {AngularFireAuth} from "angularfire2/auth";
+import {Component, OnInit} from '@angular/core';
+import {IonicPage, ModalController, NavParams} from 'ionic-angular';
 import {Geolocation, Geoposition} from '@ionic-native/geolocation';
 import {Subscription} from "rxjs/Subscription";
 import 'rxjs/add/operator/filter';
@@ -20,7 +19,7 @@ import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
   selector: 'page-radar',
   templateUrl: 'radar.html',
 })
-export class RadarPage {
+export class RadarPage implements OnInit{
   geoPosition: Geoposition;
   watch: Subscription;
   stories: FirebaseListObservable<Story[]>;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
 import {Story} from "../../interfaces/Story";
 import {Subscription} from "rxjs/Subscription";

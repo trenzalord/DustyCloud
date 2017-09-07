@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {IonicPage, ModalController, NavParams} from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
 import {User} from "../../interfaces/User";
@@ -16,7 +16,7 @@ import {User} from "../../interfaces/User";
   selector: 'page-account',
   templateUrl: 'account.html',
 })
-export class AccountPage {
+export class AccountPage implements OnInit{
   publicName: string;
   user: FirebaseObjectObservable<User>;
 

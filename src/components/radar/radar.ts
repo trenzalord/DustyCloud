@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
-import {App, ModalController, NavController} from "ionic-angular";
+import {ModalController} from "ionic-angular";
 
 /**
  * Generated class for the RadarComponent component.

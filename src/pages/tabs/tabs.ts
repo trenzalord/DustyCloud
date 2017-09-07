@@ -17,7 +17,7 @@ export class TabsPage {
   tab1 = 'RadarPage';
   tab4 = 'AccountPage';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor() {
   }
 
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {IonicPage, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {Story} from "../../interfaces/Story";
 import {AngularFireAuth} from "angularfire2/auth";
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
@@ -17,7 +17,7 @@ import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
   selector: 'page-new-story',
   templateUrl: 'edit-story.html',
 })
-export class EditStoryPage {
+export class EditStoryPage implements OnInit{
   story: Story;
   stories: FirebaseListObservable<Story[]>;
 
