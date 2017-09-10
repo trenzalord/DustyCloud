@@ -74,7 +74,7 @@ export class StoryPage implements OnInit{
   }
 
   get hasReacted() {
-    return !!(this._currentUser && this._currentUser.reactions && this._currentUser.reactions[this._story.$key]);
+    return !!(this._currentUser && this._currentUser.reactions && this._story && this._currentUser.reactions[this._story.$key]);
   }
 
   get userReaction() {
