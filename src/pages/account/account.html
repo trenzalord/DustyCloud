@@ -13,6 +13,10 @@
      <ion-label>Public Name</ion-label>
      <ion-input name="publicName" [placeholder]="'Current name: ' + (user | async)?.publicName" [(ngModel)]="publicName" (ionBlur)="saveUserPublicName()"></ion-input>
    </ion-item>
+   <button ion-item (click)="goToFriendsPage()">
+     Friends
+     <ion-badge item-right *ngIf="numberOfFriendRequests">{{ numberOfFriendRequests }}</ion-badge>
+   </button>
  </ion-list>
 </ion-content>
 

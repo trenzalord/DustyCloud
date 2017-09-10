@@ -1,0 +1,44 @@
+<!--
+  Generated template for the FriendsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Back</button>
+    </ion-buttons>
+    <ion-title>Friends</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button [value]="true">
+      Friends
+    </ion-segment-button>
+    <ion-segment-button [value]="false">
+      Requests
+      <ion-badge *ngIf="numberOfFriendRequests">{{ numberOfFriendRequests }}</ion-badge>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-list *ngIf="segment">
+    <ion-item *ngFor="let uid of friendKeys">
+      {{ userFromUid(uid)?.publicName }}
+      <button ion-button item-right (click)="removeFriend(uid)">Remove</button>
+      <button ion-button item-right (click)="gotToProfile(uid)">Profile</button>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="!segment">
+    <ion-item *ngFor="let uid of friendRequestKeys">
+      {{ userFromUid(uid)?.publicName || "Anonymous" }}
+      <button ion-button item-right (click)="processFriendRequest(uid, true)">Accept</button>
+      <button ion-button item-right (click)="processFriendRequest(uid, false)">Decline</button>
+      <button ion-button item-right (click)="gotToProfile(uid)">Profile</button>
+    </ion-item>
+  </ion-list>
+</ion-content>

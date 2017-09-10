@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavParams, ViewController} from 'ionic-angular';
+import {IonicPage, ModalController, NavParams, ViewController} from 'ionic-angular';
 import {AngularFireDatabase, FirebaseObjectObservable} from "angularfire2/database";
 import {Story} from "../../interfaces/Story";
 import {Subscription} from "rxjs/Subscription";
@@ -23,6 +23,7 @@ export class StoryPage {
   sub: Subscription;
 
   constructor(public viewCtrl: ViewController,
+              public modalCtrl: ModalController,
               public navParams: NavParams,
               private db: AngularFireDatabase) {
     this.story = this.db.object('stories/' + this.navParams.get('storyKey'));
@@ -34,6 +35,14 @@ export class StoryPage {
   dismiss() {
     this.sub.unsubscribe();
     this.viewCtrl.dismiss();
+  }
+
+  goToProfile() {
+    this.user.subscribe(user => {
+      this.modalCtrl.create('ProfilePage', {
+        uid: user.$key
+      }).present();
+    }).unsubscribe();
   }
 
 }

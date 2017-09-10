@@ -20,10 +20,10 @@
       <ion-label>Event Date</ion-label>
       <p item-right>{{ (story | async)?.eventDate | date }}</p>
     </ion-item>
-    <ion-item>
+    <button ion-item (click)="goToProfile()">
       <ion-label>Author</ion-label>
-      <p item-right>{{ (user | async)?.publicName }}</p>
-    </ion-item>
+      <span item-right>{{ (user | async)?.publicName }}</span>
+    </button>
   </ion-list>
   <button ion-button block (click)="dismiss()">Back</button>
 </ion-content>
