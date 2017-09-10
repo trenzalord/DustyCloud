@@ -12,6 +12,12 @@
         <ion-input name="title" [(ngModel)]="story.title"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-label>Category</ion-label>
+        <ion-select name="category" [(ngModel)]="story.category">
+          <ion-option *ngFor="let categoryKey of categoryKeys" [value]="categoryKey">{{ categoryKey }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
         <ion-label>Description</ion-label>
         <ion-textarea name="description" [(ngModel)]="story.description"></ion-textarea>
       </ion-item>

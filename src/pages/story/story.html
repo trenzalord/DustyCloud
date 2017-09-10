@@ -13,6 +13,10 @@
       <h2 item-right>{{ (story | async)?.title}}</h2>
     </ion-item>
     <ion-item>
+      <ion-label>Category</ion-label>
+      <h2 item-right>{{ (story | async)?.category || "NONE"}}</h2>
+    </ion-item>
+    <ion-item>
       <ion-label>Description</ion-label>
       <p item-right>{{ (story | async)?.description }}</p>
     </ion-item>

@@ -2,8 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {Story} from "../../interfaces/Story";
 import {AngularFireAuth} from "angularfire2/auth";
-import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
+import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2/database";
 import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
+import {Categories} from "../../interfaces/Categories";
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * Generated class for the StoryPage page.
@@ -20,6 +22,8 @@ import {GeoFireProvider} from "../../providers/geo-fire/geo-fire";
 export class EditStoryPage implements OnInit{
   story: Story;
   stories: FirebaseListObservable<Story[]>;
+  sub: Subscription;
+  _categories: Categories;
 
   constructor(private viewCtrl: ViewController,
               public navParams: NavParams,
@@ -37,6 +41,7 @@ export class EditStoryPage implements OnInit{
   }
 
   ngOnInit() {
+    this.sub = this.db.object("/categories").subscribe(categories => this._categories = categories);
     this.story.eventDate = new Date().toISOString();
     this.story.uid = this.auth.auth.currentUser.uid;
   }
@@ -59,7 +64,15 @@ export class EditStoryPage implements OnInit{
     }
   }
 
+  get categoryKeys() {
+    if (this._categories) {
+      return Object.keys(this._categories);
+    }
+    return [];
+  }
+
   dismiss() {
+    this.sub.unsubscribe();
     this.viewCtrl.dismiss();
   }
 }

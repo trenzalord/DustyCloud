@@ -5,5 +5,6 @@ export interface Story {
   description: string,
   eventDate: string,
   createdDate: string,
-  updatedDate?: string
+  updatedDate?: string,
+  category?: string
 }
