@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AgmMap} from "@agm/core";
 import {ModalController} from "ionic-angular";
 
@@ -12,13 +12,15 @@ import {ModalController} from "ionic-angular";
   selector: 'radar',
   templateUrl: 'radar.html'
 })
-export class RadarComponent implements AfterViewInit{
+export class RadarComponent implements AfterViewInit, OnInit{
 
   @Input() center: number[];
   @Input() points: {[key: string]: {key: string, location: number[]}}[];
   @ViewChild(AgmMap) map: AgmMap;
 
+  shouldShowRecenterButton: boolean;
   styles: any;
+  firstIdle: boolean;
 
   constructor(public modalCtrl: ModalController) {
     this.styles = [
@@ -242,6 +244,10 @@ export class RadarComponent implements AfterViewInit{
     ];
   }
 
+  ngOnInit() {
+    this.firstIdle = true;
+  }
+
   ngAfterViewInit() {
     this.map.triggerResize();
   }
@@ -254,5 +260,21 @@ export class RadarComponent implements AfterViewInit{
     this.modalCtrl.create("StoryPage", {
       storyKey: storyKey
     }).present();
+  }
+
+  idle() {
+    if (this.firstIdle) {
+      this.firstIdle = false;
+    } else {
+      this.shouldShowRecenterButton = true;
+    }
+  }
+
+  recenterMap() {
+    this.map.latitude = this.center[0];
+    this.map.longitude  = this.center[1];
+    this.map.triggerResize(true);
+    this.shouldShowRecenterButton = false;
+    this.firstIdle = true;
   }
 }

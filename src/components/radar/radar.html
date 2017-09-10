@@ -1,11 +1,15 @@
 <!-- Generated template for the RadarComponent component -->
+<div id="recenter-button">
+  <button ion-button (click)="recenterMap()" *ngIf="shouldShowRecenterButton">Recenter</button>
+</div>
 <agm-map [latitude]="center[0]"
          [longitude]="center[1]"
          [disableDefaultUI]="true"
          [streetViewControl]="false"
          [zoomControl]="false"
          [zoom]="16"
-         [styles]="styles">
+         [styles]="styles"
+         (idle)="idle()">
   <agm-marker *ngFor="let storyKey of pointsKeys"
               [latitude]="points[storyKey].location[0]"
               [longitude]="points[storyKey].location[1]"
