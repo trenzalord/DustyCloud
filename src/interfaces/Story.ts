@@ -7,4 +7,5 @@ export interface Story {
   createdDate: string,
   updatedDate?: string,
   category?: string
+  reactions?: {[key: string]: string}
 }

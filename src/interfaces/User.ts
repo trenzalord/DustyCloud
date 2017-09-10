@@ -4,4 +4,5 @@ export interface User {
   friends?: {[key: string]: boolean},
   friend_requests?: {[key: string]: boolean},
   publicName?: string
+  reactions?: {[key:string]: string}
 }

@@ -28,6 +28,14 @@
       <ion-label>Author</ion-label>
       <span item-right>{{ (user | async)?.publicName }}</span>
     </button>
+    <ion-item *ngIf="!hasReacted">
+      Reaction
+      <button item-right ion-button *ngFor="let reactionKey of reactionKeys" (click)="addReaction(reactionKey)">{{ reactionKey }}</button>
+    </ion-item>
+    <ion-item *ngIf="hasReacted">
+      You {{ userReaction }} this
+      <button ion-button item-right (click)="removeReaction()">Remove</button>
+    </ion-item>
   </ion-list>
   <button ion-button block (click)="dismiss()">Back</button>
 </ion-content>
