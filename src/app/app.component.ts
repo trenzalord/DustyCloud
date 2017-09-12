@@ -3,6 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {AngularFireAuth} from "angularfire2/auth";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   templateUrl: 'app.html'
@@ -12,7 +13,10 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar,
               splashScreen: SplashScreen,
-              auth: AngularFireAuth) {
+              auth: AngularFireAuth,
+              translate: TranslateService) {
+    translate.setDefaultLang("en");
+    translate.use("fr");
     auth.authState.subscribe((authed) => {
       if (!!authed) {
         this.rootPage = "TabsPage";

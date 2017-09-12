@@ -1,0 +1,16 @@
+{
+  "TABS": {
+    "RADAR": {
+      "TITLE": "Radar"
+    },
+    "FEED": {
+      "TITLE": "Feed"
+    },
+    "COLLECTION": {
+      "TITLE": "Collection"
+    },
+    "ACCOUNT": {
+      "TITLE": "Account"
+    }
+  }
+}

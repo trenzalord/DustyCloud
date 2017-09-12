@@ -21,7 +21,7 @@
       <p item-right>{{ numberOfStories }}</p>
     </ion-item>
     <ion-item *ngIf="isFriend">
-      This asshole is your friend
+      This is your friend
     </ion-item>
   </ion-list>
   <button ion-button block (click)="sendFriendRequest()" *ngIf="shouldShowSendRequestButton || friendRequestSent || loadingSendRequest" [disabled]="friendRequestSent">

@@ -14,9 +14,15 @@ import {Geolocation} from '@ionic-native/geolocation';
 import { GeoFireProvider } from '../providers/geo-fire/geo-fire';
 import { AgmCoreModule } from '@agm/core';
 import { AppVersionProvider } from '../providers/app-version/app-version';
-import {HttpModule} from "@angular/http";
+import {Http, HttpModule} from "@angular/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 
 let firebaseConfig = devEnv.firebase;
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -29,6 +35,13 @@ let firebaseConfig = devEnv.firebase;
     AngularFireModule.initializeApp(firebaseConfig),
     AgmCoreModule.forRoot({
       apiKey: devEnv.googleMapApiKey
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+      }
     }),
     AngularFireDatabaseModule,
     AngularFireAuthModule
