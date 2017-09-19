@@ -32,6 +32,9 @@
       Reaction
       <button item-right ion-button *ngFor="let reactionKey of reactionKeys" (click)="addReaction(reactionKey)">{{ reactionKey }}</button>
     </ion-item>
+    <ion-item *ngFor="let reactionKey of reactionKeys">
+      {{ reactionCount(reactionKey) }} people {{ reactionKey }} this
+    </ion-item>
     <ion-item *ngIf="hasReacted">
       You {{ userReaction }} this
       <button ion-button item-right (click)="removeReaction()">Remove</button>

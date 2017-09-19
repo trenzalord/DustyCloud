@@ -68,6 +68,13 @@ export class StoryPage implements OnInit{
     return [];
   }
 
+  reactionCount(reactionKey: string): number {
+    if (this._story && this._reactions && this._reactions[reactionKey] && this._story.reactions) {
+      return Object.keys(this._story.reactions).filter(userKey => this._story.reactions[userKey] === reactionKey).length;
+    }
+    return 0;
+  }
+
   addReaction(reactionKey: string) {
     this.db.object('users/' + this._currentUser.$key + '/reactions/' + this._story.$key).set(reactionKey);
     this.db.object('stories/' + this._story.$key + '/reactions/' + this._currentUser.$key).set(reactionKey);
