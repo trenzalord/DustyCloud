@@ -258,7 +258,8 @@ export class RadarComponent implements AfterViewInit, OnInit{
 
   goToViewStory(storyKey: string) {
     this.modalCtrl.create("StoryPage", {
-      storyKey: storyKey
+      storyKey: storyKey,
+      viewOrigin: 'radar'
     }).present();
   }
 

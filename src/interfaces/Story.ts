@@ -7,5 +7,7 @@ export interface Story {
   createdDate: string,
   updatedDate?: string,
   category?: string
-  reactions?: {[key: string]: string}
+  reactions?: {[key: string]: string},
+  seen_physically?: {[key: string]: boolean},
+  seen_other?: {[key: string]: boolean}
 }

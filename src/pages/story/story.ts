@@ -24,6 +24,9 @@ export class StoryPage implements OnInit{
   user: FirebaseObjectObservable<User>;
   subs: Subscription[];
 
+  _storyKey: string;
+  _viewOrigin: string;
+
   _reactions: Reactions;
   _currentUser: User;
   _story: Story;
@@ -37,13 +40,19 @@ export class StoryPage implements OnInit{
   }
 
   ngOnInit() {
-    this.story = this.db.object('stories/' + this.navParams.get('storyKey'));
+    this._storyKey = this.navParams.get('storyKey');
+    this._viewOrigin = this.navParams.get('viewOrigin');
+
+    this.story = this.db.object('stories/' + this._storyKey);
     this.subs[0] = this.story.subscribe((story: Story) => {
       this._story = story;
       this.user = this.db.object('users/' + story.uid);
     });
     this.subs[1] = this.db.object("reactions/").subscribe(reactions => this._reactions = reactions);
-    this.subs[2] = this.db.object('users/' + this.auth.auth.currentUser.uid).subscribe(user => this._currentUser = user);
+    this.subs[2] = this.db.object('users/' + this.auth.auth.currentUser.uid).subscribe(user => {
+      this._currentUser = user;
+      this.incrementViewCount();
+    });
   }
 
   dismiss() {
@@ -91,5 +100,20 @@ export class StoryPage implements OnInit{
   removeReaction() {
     this.db.object('users/' + this._currentUser.$key + '/reactions/' + this._story.$key).remove();
     this.db.object('stories/' + this._story.$key + '/reactions/' + this._currentUser.$key).remove();
+  }
+
+  incrementViewCount() {
+    if (this._viewOrigin === 'radar' && !(this._currentUser.stories_seen_physically && this._currentUser.stories_seen_physically[this._storyKey])) {
+      this.db.object('users/' + this._currentUser.$key + '/stories_seen_physically/' + this._storyKey).set(true);
+      this.db.object('stories/' + this._storyKey + '/seen_physically/' + this._currentUser.$key).set(true);
+      this._incrementOtherViewCount();
+    } else if (this._viewOrigin && !(this._currentUser.stories_seen_other && this._currentUser.stories_seen_other[this._storyKey])) {
+      this._incrementOtherViewCount();
+    }
+  }
+
+  private _incrementOtherViewCount() {
+    this.db.object('users/' + this._currentUser.$key + '/stories_seen_other/' + this._storyKey).set(true);
+    this.db.object('stories/' + this._storyKey + '/seen_other/' + this._currentUser.$key).set(true);
   }
 }
